@@ -1,0 +1,26 @@
+#dataset named as "data" with variables "antwoordmogelijkheid", `Totaal %` and variable.
+#Same dataset, different visuals. 
+
+##code for stacked bar chart
+antw_levels <- c("Zeer ontevreden", "Eerder ontevreden", "Niet tevreden, niet ontevreden", "Eerder tevreden", "Zeer tevreden", "Niet van toepassing")
+variable_levels <- c("ALG_TEVREDEN_X1", "ALG_TEVREDEN_X2", "ALG_TEVREDEN_X3", "ALG_TEVREDEN_X4", "ALG_TEVREDEN_X5", "ALG_TEVREDEN_X6")
+
+#order "antwoordmogelijkheid" via specific predefined values, the same for "variable".
+ggplot(data, aes(fill = factor(antwoordmogelijkheid, levels = antw_levels), y = `Totaal %`, x = factor(variabele, levels = rev(variable_levels)))) +
+  geom_bar(position="stack", stat="identity") + coord_flip() +
+  scale_fill_manual(values = c("#B8E7F2", "#8DD9EB","#51C6E1","#1F9DBB", "#1C8EAA", "#F2DC59" ), name = " ") +
+  labs(title = "Hoe tevreden ben je over het algemeen over jouw buurt?") +
+  theme(panel.background = element_blank())
+
+##code for dot plot 
+ggplot(data, aes(x = reorder(variabele, `Totaal %`), y = `Totaal %`)) +
+  geom_point(size = 4) +
+  scale_y_continuous(limits = c(0, 100)) +
+  coord_flip() +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    panel.border = element_rect(color = "white")
+  ) +
+ labs(x = NULL, y = NULL)  +
+scale_x_discrete(labels = NULL)
